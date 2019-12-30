@@ -16,10 +16,21 @@ public class NQueen {
     private static final int n = 4;
     private static int[][] board = new int[n][n];
 
+    // print board
+    private static void printBoard() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println("");
+        }
+    }
+
     // Method checks if given queen position is valid by checking previous rows and diagonals
     // col = x; row = y
-    private static boolean isValid(int col, int row) {
+    private static boolean isValid(int row, int col) {
         int i, j;
+
         for (i = 0; i < col; i++) {
             if (board[row][i] == 1) {
                 return false;
@@ -32,31 +43,50 @@ public class NQueen {
             }
         }
         // lower diagonal
-        for (i = col, j = row; i >=0 && j >=0; i--, j++) {
+        for (i = col, j = row; i >=0 && j < n; i--, j++) {
             if (board[i][j] == 1) {
                 return false;
             }
         }
-
         return true;
-
-
-
     }
 
-
-    private static void printBoard() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println("");
+    private static boolean NQueen(int col) {
+        if (col == n) {
+           // printBoard();
+            return true;
         }
+
+        // Checks if given move is valid for all positions in the column
+        for (int i = 0; i < n; i++) {
+            if (isValid(i,col)) {
+                board[i][col] = 1;
+
+                // This creates a "temporary board state". It checks to see if the next column has a valid position at all
+                // If there is no valid position, it goes back to the previous board state, and makes the Queen's position
+                // a 0. Then it goes to the next valid position for that board state.
+                if (NQueen(col+1)) {
+                    return true;
+                }
+                board[i][col] = 0;
+            }
+        }
+
+        // if it leaves this forloop recurse
+        return false;
+
+
     }
+
 
     public static void main(String[] args) {
-        board[0][0] = 1;
         printBoard();
+
+        if (NQueen(0)) {
+            printBoard();
+        }
+
+        //System.out.println(isValid(0,0));
     }
 
 }
