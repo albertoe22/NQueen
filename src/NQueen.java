@@ -37,13 +37,13 @@ public class NQueen {
             }
         }
         // upper diagonal
-        for (i = col, j = row; i >= 0  && j >= 0; i--, j--) {
+        for (i = row, j = col; i >= 0  && j >= 0; i--, j--) {
             if (board[i][j] == 1) {
                 return false;
             }
         }
         // lower diagonal
-        for (i = col, j = row; i >=0 && j < n; i--, j++) {
+        for (i = row,  j = col; j >=0 && i < n; j--, i++) {
             if (board[i][j] == 1) {
                 return false;
             }
@@ -74,17 +74,16 @@ public class NQueen {
 
         // if it leaves this forloop recurse
         return false;
-
-
     }
 
 
     public static void main(String[] args) {
-        printBoard();
-
         if (NQueen(0)) {
             printBoard();
         }
+/*     board[2][1] = 1;
+       printBoard();
+       System.out.println(isValid(3,2));*/
 
         //System.out.println(isValid(0,0));
     }
